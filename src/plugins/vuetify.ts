@@ -10,10 +10,14 @@ import 'vuetify/styles'
 
 // Composables
 import { createVuetify } from 'vuetify'
+import {lightTheme} from "@/plugins/theme";
 
 // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 export default createVuetify({
   theme: {
-    defaultTheme: 'dark',
+    defaultTheme: "lightTheme",
+    themes: {
+      lightTheme,
+    },
   },
 })
