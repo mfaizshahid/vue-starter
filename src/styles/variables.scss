@@ -1,0 +1,39 @@
+// Border radius
+$root-border-radius: 16px;
+
+// Widths
+$page-max-width: 2000px;
+
+// Colors
+$app-light-colors: (
+        "background": #fafcff,
+        "primary": #2c2727,
+        "secondary": #3e3939,
+        "primary-dark": #2c32a9,
+        "primary-light": #33bfff,
+        "light-primary": #f6f9ff,
+        "danger": #ff4066,
+        "danger-light": #ff8473,
+        "success": #3ce17e,
+        "success-light": #f4fcf5,
+        "info": #2dfff5,
+        "warning": #ffb815,
+        "warning-light": #fef8ee,
+        "pink": #ee49fd,
+        "pink-light": #fef4ff,
+        "white": #ffffff,
+        "dark": #000000,
+        "dark-darker": #0f1322,
+        "blue-light": #effaff,
+        "grey": #858d98,
+        "light-bg": #f1f5fe,
+        "border": rgba(28, 83, 244, 0.06),
+        "light-border": rgba(133, 141, 152, 0.2),
+        "text-dark": #4b4e56,
+        "danger-bg": rgba(227, 45, 107, 0.1),
+        "danger-light-bg": rgba(255, 247, 245, 1),
+        "primary-light-bg": rgba(246, 249, 255, 1),
+        "success-bg": rgba(244, 252, 245, 1),
+);
+@use "sass:map";
+@use "vuetify/lib/styles/settings/_variables.scss";

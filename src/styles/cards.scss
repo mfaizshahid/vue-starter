@@ -1,0 +1,8 @@
+@use "sass:map";
+@use "variables" as *;
+.base-card {
+  padding: 1.5rem;
+  background: map.get($app-light-colors, "white");
+  box-shadow: 0 6px 32px rgba(44, 50, 169, 0.04);
+  border-radius: $root-border-radius;
+}

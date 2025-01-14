@@ -1,0 +1,59 @@
+@use "sass:map";
+@use "variables" as *;
+@use "vuetify/lib/styles/settings/_variables.scss" as *;
+
+.base-body-text {
+  font-weight: 500;
+  font-size: 16px !important;
+  line-height: 24px;
+  font-style: normal;
+  color: map.get($app-light-colors, "grey");
+  text-transform: initial;
+}
+
+.base-page-title {
+  font-style: normal;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 33px;
+  background: linear-gradient(
+                  111.38deg,
+                  map.get($app-light-colors, "primary") -14.97%,
+                  map.get($app-light-colors, "primary-dark") 119.46%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: initial;
+}
+
+.base-section-title {
+  @extend .base-body-text;
+  color: map.get($app-light-colors, "dark-darker");
+  font-weight: 700;
+  font-size: 1rem !important;
+  @media #{map.get($display-breakpoints, 'md-and-up')} {
+    font-size: 1.5rem !important;
+  }
+}
+
+.base-section-sub-title {
+  @extend .base-section-title;
+  text-transform: initial !important;
+  font-weight: 600;
+  font-size: 1rem !important;
+}
+
+.ellipse-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  //@include media-breakpoint-up(md) {
+  //  width: 150px;
+  //}
+}
+
+.not-found-text {
+  @extend .base-body-text;
+  color: map.get($app-light-colors, "danger");
+}

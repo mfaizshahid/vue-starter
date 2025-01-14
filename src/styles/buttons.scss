@@ -1,0 +1,36 @@
+@use "sass:map";
+@use "variables" as *;
+
+.base-submit-button {
+  width: 100%;
+  background: linear-gradient(
+                  167.78deg,
+                  #1df1e7 -71.63%,
+                  map.get($app-light-colors, "primary") 137.34%
+  );
+  box-shadow: 0 6px 32px 0 #2c32a90a;
+  border-radius: 12px;
+  text-transform: initial;
+  min-height: 65px;
+  color: map.get($app-light-colors, "white");
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+  margin-bottom: 18px;
+}
+
+.base-disable-button {
+  @extend .base-submit-button;
+  background: map.get($app-light-colors, "disabled");
+  cursor: none;
+  pointer-events: none;
+}
+
+.base-simple-button {
+  @extend .base-submit-button;
+  background: map.get($app-light-colors, "white");
+  box-shadow: none;
+  color: map.get($app-light-colors, "secondary");
+  border: 1.5px solid map.get($app-light-colors, "border");
+}
+

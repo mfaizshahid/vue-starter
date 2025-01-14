@@ -1,0 +1,44 @@
+@use "sass:map";
+@use "variables" as *;
+
+.base-form {
+  .form-field {
+    .form-field-label {
+      font-size: 14px;
+      line-height: 16px;
+      text-transform: capitalize;
+      color: #0f1322;
+      margin-bottom: 12px;
+      display: block;
+      font-weight: 600;
+    }
+
+    .form-field-input {
+      .v-field {
+        background-color: #ffffff !important;
+        box-shadow: 0 6px 32px rgba(44, 50, 169, 0.04) !important;
+        border-radius: 12px !important;
+        //padding: 12px !important;
+        //min-height: 56px !important;
+
+        .v-text-field__slot {
+          padding: 0 8px !important;
+        }
+      }
+
+      .v-text-field__details {
+        .v-messages__message {
+          padding: 0 8px !important;
+        }
+      }
+    }
+
+    &-errors {
+      margin: 0.4rem 0;
+
+      &-error {
+        color: map.get($app-light-colors, "danger");
+      }
+    }
+  }
+}
