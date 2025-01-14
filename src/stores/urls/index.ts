@@ -1,5 +1,5 @@
-import BaseUrls from "@/stores/urls/base";
-import AuthUrls from "@/stores/urls/auth";
+import BaseUrls from "@/stores/urls/base.urls";
+import AuthUrls from "@/stores/urls/auth.urls";
 
 export {
   BaseUrls,
