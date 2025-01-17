@@ -1,8 +1,8 @@
 import { IAuth } from "@/stores/modules/auth";
 import { AuthUrls } from "@/stores/urls";
-import axios, { type AxiosRequestConfig } from "axios";
-const emailRegister = async (payload: IAuth.AuthFormPayload) => {
-  return await axios.post(AuthUrls.EMAIL_REGISTER, payload);
+import axios, {type AxiosRequestConfig, type AxiosResponse} from "axios";
+const emailRegister = async (payload: IAuth.AuthFormPayload):Promise<AxiosResponse<IAuth.User>> => {
+  return await axios.post<IAuth.User>(AuthUrls.EMAIL_REGISTER, payload);
 };
 
 const emailLogin = async (payload: IAuth.AuthFormPayload) => {

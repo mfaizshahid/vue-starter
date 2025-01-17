@@ -10,7 +10,7 @@ import { setupLayouts } from "virtual:generated-layouts";
 import { routes } from "vue-router/auto-routes";
 import { useAuthStore } from "@/stores";
 import { storeToRefs } from "pinia";
-import { IAuth } from "@/stores/modules/auth";
+import {IApp} from "@/interfaces";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,14 +22,14 @@ router.beforeEach(async (to) => {
   document.title = (to as any).meta?.title || "Starter";
   const authStore = useAuthStore();
   const { state, tokens } = storeToRefs(authStore);
-  const accessToken = tokens.value?.token;
+  const accessToken = tokens.value?.access_token;
   // If the user is unauthenticated and there is an access token, set the app state to user
-  if (state.value === IAuth.AppStates.unauthenticated && accessToken) {
+  if (state.value === IApp.AppStates.unauthenticated && accessToken) {
     await authStore.initUser();
   }
   const routeMetaState = to.meta?.allowedStates
-    ? (to.meta.allowedStates as IAuth.AppStates)
-    : [IAuth.AppStates.unauthenticated];
+    ? (to.meta.allowedStates as IApp.AppStates)
+    : [IApp.AppStates.unauthenticated];
   // If route state is valid => allow navigation
   if (routeMetaState.includes(state.value)) {
     if (to.fullPath === "/") {

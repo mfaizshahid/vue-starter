@@ -1,44 +1,28 @@
-import { IApp } from "@/interfaces";
 
 export interface AuthUserResponse extends Tokens {
   user: User;
 }
-export interface User {
-  id: string;
+export interface User extends Role {
   email: string;
-  provider: IApp.AuthProvidersEnum;
-  socialId: null;
-  firstName: string;
-  lastName: string;
-  role: {
-    id: IApp.RoleEnum;
-  };
-  status: {
-    id: IApp.StatusEnum;
-  };
-  createdAt: string;
-  updatedAt: string;
+  role_details: Role;
+}
+
+export interface Role {
+  name: string;
+  id: string;
+  active: boolean;
+  created_at: string;
 }
 
 export interface Tokens {
-  refreshToken: string;
-  token: string;
-  tokenExpires: number;
+  access_token: string;
+  refresh_token: string;
 }
+
 export interface AuthFormPayload {
   email: string;
   password: string;
-  firstName?: string;
-  lastName?: string;
-}
-
-export enum AppStates {
-  "unauthenticated" = "unauthenticated",
-  "emailVerificationPending" = "emailVerificationPending",
-  "emailVerificationComplete" = "emailVerificationComplete",
-  "user" = "user",
-  "admin" = "admin",
-  "rootError" = "rootError",
+  name?: string;
 }
 
 export interface ResendEmailVerificationPayload {

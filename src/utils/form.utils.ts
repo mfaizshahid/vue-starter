@@ -1,4 +1,6 @@
 import {utils} from "@/utils/";
+import type {AxiosError} from "axios";
+import {IApp} from "@/interfaces";
 
 const requiredRule =
   (message: string = "Field is required") =>
@@ -48,11 +50,22 @@ const rangeRule =
     (value: number) => {
       return value >= min && value <= max ? true : message;
     };
+
+const extractErrorMsg = (error: Error) => {
+  if ((error as AxiosError).isAxiosError) {
+    const axiosError = error as AxiosError;
+    console.log(axiosError)
+    const errData = axiosError?.response?.data as IApp.ErrorMsgResponse;
+    return errData.statusMessage || 'An unknown error occurred';
+  }
+  return error.message;
+};
 export default {
   requiredRule,
   emailFormatRule,
   minLengthRule,
   maxLengthRule,
   passwordFormatRule,
-  rangeRule
+  rangeRule,
+  extractErrorMsg
 };

@@ -10,12 +10,11 @@ export const useAuthStore = defineStore("auth", () => {
   const user = ref<IAuth.User | null>(null);
   const tokens = ref<IAuth.Tokens | null>(null);
   const rehydrateLoading = ref<boolean>(false);
-  const appState = ref<IAuth.AppStates>(IAuth.AppStates.unauthenticated);
+  const appState = ref<IApp.AppStates>(IApp.AppStates.unauthenticated);
   const loginPayload = ref<IAuth.AuthFormPayload>({
     email: "",
     password: "",
-    firstName: "",
-    lastName: "",
+    name: "",
   });
 
   // ****** Getters ******
@@ -34,7 +33,7 @@ export const useAuthStore = defineStore("auth", () => {
   const setRehydrateLoading = (loading: boolean) => {
     rehydrateLoading.value = loading;
   };
-  const setAppState = (newAppState: IAuth.AppStates) => {
+  const setAppState = (newAppState: IApp.AppStates) => {
     appState.value = newAppState;
   };
   const setLoginPayload = (payload: IAuth.AuthFormPayload) => {
@@ -52,9 +51,8 @@ export const useAuthStore = defineStore("auth", () => {
   };
   // Save the tokens to storage
   const saveTokensToStorage = (tokens: IAuth.Tokens) => {
-    localStorage.setItem("accessToken", tokens.token);
-    localStorage.setItem("refreshToken", tokens.refreshToken);
-    localStorage.setItem("expiresIn", tokens.tokenExpires.toString());
+    localStorage.setItem("accessToken", tokens.access_token);
+    localStorage.setItem("refreshToken", tokens.refresh_token);
   };
   // Load the tokens from storage, if they exist
   const loadTokensFromStorage = () => {
@@ -64,9 +62,8 @@ export const useAuthStore = defineStore("auth", () => {
 
     if (accessToken && refreshToken && expiresIn) {
       const tokens: IAuth.Tokens = {
-        token: accessToken,
-        refreshToken: refreshToken,
-        tokenExpires: parseInt(expiresIn),
+        access_token: accessToken,
+        refresh_token: refreshToken,
       };
       setTokens(tokens);
     }
@@ -74,40 +71,40 @@ export const useAuthStore = defineStore("auth", () => {
   // Rehydrate the state based on the roles and status of the user
   const rehydrateState = () => {
     const _user = user.value;
-    if (!_user) setAppState(IAuth.AppStates.unauthenticated);
-    else if (_user.role.id === IApp.RoleEnum.admin)
-      setAppState(IAuth.AppStates.admin);
+    if (!_user) setAppState(IApp.AppStates.unauthenticated);
+    else if (_user.role_details.name === IApp.AppRoles.ADMIN)
+      setAppState(IApp.AppStates.admin);
     else if (
-      _user.role.id === IApp.RoleEnum.user &&
-      _user.status.id === IApp.StatusEnum.inactive
+      _user.role_details.name === IApp.AppRoles.USER &&
+      !_user.active
     )
-      setAppState(IAuth.AppStates.emailVerificationPending);
+      setAppState(IApp.AppStates.emailVerificationPending);
     else if (
-      _user.role.id === IApp.RoleEnum.user &&
-      _user.status.id === IApp.StatusEnum.active
+      _user.role_details.name === IApp.AppRoles.USER &&
+      _user.active
     )
-      setAppState(IAuth.AppStates.user);
-    else setAppState(IAuth.AppStates.unauthenticated);
+      setAppState(IApp.AppStates.user);
+    else setAppState(IApp.AppStates.unauthenticated);
   };
   // Navigate user based on the app state
   const rehydrateNavigation = () => {
     // const router = useRouter()
     const state = appState.value;
 
-    if (state === IAuth.AppStates.unauthenticated) {
+    if (state === IApp.AppStates.unauthenticated) {
       // Navigate to the login page
       router.push(AppRoutes.Auth.LOGIN);
-    } else if (state === IAuth.AppStates.emailVerificationPending) {
+    } else if (state === IApp.AppStates.emailVerificationPending) {
       // Navigate to the email verification page
       router.push(AppRoutes.Auth.EMAIL_VERIFICATION);
-    } else if (state === IAuth.AppStates.emailVerificationComplete) {
+    } else if (state === IApp.AppStates.emailVerificationComplete) {
       // Navigate to the user dashboard
-    } else if (state === IAuth.AppStates.user) {
+    } else if (state === IApp.AppStates.user) {
       // Navigate to the user dashboard
       router.push(AppRoutes.User.DASHBOARD);
-    } else if (state === IAuth.AppStates.admin) {
+    } else if (state === IApp.AppStates.admin) {
       // Navigate to the admin dashboard
-    } else if (state === IAuth.AppStates.rootError) {
+    } else if (state === IApp.AppStates.rootError) {
       router.push(AppRoutes.Auth.LOGIN);
     }
   };
@@ -126,7 +123,7 @@ export const useAuthStore = defineStore("auth", () => {
     localStorage.clear();
     setUser(null);
     setTokens(null);
-    setAppState(IAuth.AppStates.unauthenticated);
+    setAppState(IApp.AppStates.unauthenticated);
     setRehydrateLoading(false);
     rehydrateNavigation();
   };
