@@ -9,17 +9,30 @@ const { sidebarDrawer } = storeToRefs(appStore);
 </script>
 
 <template>
-    <v-navigation-drawer app class="sidebar" left v-model="sidebarDrawer">
-        <div class="d-flex align-center justify-start">
-            <v-img :src="logo" alt="Starter" max-height="65" max-width="65" />
-            <h3>Starter</h3>
-        </div>
-        <v-list nav>
-            <v-list-item :to="AppRoutes.User.DASHBOARD" prepend-icon="mdi-view-dashboard" title="Dashboard"
-                value="dashboard"></v-list-item>
-
-        </v-list>
-    </v-navigation-drawer>
+  <v-navigation-drawer
+    v-model="sidebarDrawer"
+    app
+    class="sidebar"
+    left
+  >
+    <div class="d-flex align-center justify-start">
+      <v-img
+        :src="logo"
+        alt="Starter"
+        max-height="65"
+        max-width="65"
+      />
+      <h3>Starter</h3>
+    </div>
+    <v-list nav>
+      <v-list-item
+        :to="AppRoutes.User.DASHBOARD"
+        prepend-icon="mdi-view-dashboard"
+        title="Dashboard"
+        value="dashboard"
+      />
+    </v-list>
+  </v-navigation-drawer>
 </template>
 
 <style lang="scss" scoped>

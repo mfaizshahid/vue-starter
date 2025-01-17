@@ -17,7 +17,8 @@ const router = createRouter({
   routes: setupLayouts(routes),
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async (to) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   document.title = (to as any).meta?.title || "Starter";
   const authStore = useAuthStore();
   const { state, tokens } = storeToRefs(authStore);

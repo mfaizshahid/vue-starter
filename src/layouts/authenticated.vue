@@ -1,14 +1,14 @@
 <template>
-    <v-app>
-        <AppSidebar />
-        <AppNavbar />
+  <v-app>
+    <AppSidebar />
+    <AppNavbar />
 
-        <v-main>
-            <v-container class="py-2 py-md-8 h-100">
-                <router-view />
-            </v-container>
-        </v-main>
-    </v-app>
+    <v-main>
+      <v-container class="py-2 py-md-8 h-100">
+        <router-view />
+      </v-container>
+    </v-main>
+  </v-app>
 </template>
 
 <script lang="ts" setup>
