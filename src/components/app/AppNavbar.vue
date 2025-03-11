@@ -29,24 +29,6 @@ const logoutUser = () => {
           <v-app-bar-nav-icon
             @click.stop="appStore.setSidebarDrawer(!sidebarDrawer)"
           />
-          <div v-if="$route.name !== $router.currentRoute.value.name">
-            <!--            <v-img :alt="$route.meta.title as string" :src="utils.constructImageUrl($route.meta.icon)" max-height="auto"-->
-            <!--                   width="30"/>-->
-            <v-icon>{{ $route.meta.icon }}</v-icon>
-          </div>
-          <div v-else>
-            <!--            <v-img :alt="$route.meta.title as string" :src="utils.constructImageUrl($route.meta.activeIcon)"-->
-            <!--                   max-height="auto"-->
-            <!--                   width="30"/>-->
-            <v-icon
-              :class="{
-                'mdi-spin mdi-rotate-45': $route.meta.iconClasses,
-              }"
-              color="primary"
-            >
-              {{ $route.meta.activeIcon }}
-            </v-icon>
-          </div>
           <h1>{{ $route.meta.title }}</h1>
         </div>
       </div>
