@@ -7,6 +7,7 @@ export enum FormTypes {
 
 export enum AppRoles {
   ADMIN = "admin",
+  USER = "user",
 }
 export interface ErrorMsgResponse {
   statusCode: string;
@@ -35,4 +36,11 @@ export enum AppStates {
   "user" = "user",
   "admin" = "admin",
   "rootError" = "rootError",
+}
+
+export interface SidebarData {
+  title: string;
+  icon: string;
+  to: string;
+  value: string;
 }

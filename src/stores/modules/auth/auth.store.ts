@@ -23,6 +23,12 @@ export const useAuthStore = defineStore("auth", () => {
   const getRehydrateLoading = () => computed(() => rehydrateLoading.value);
   const getAppState = () => computed(() => appState.value);
   const getLoginPayload = () => computed(() => loginPayload.value);
+  const getUserType = () =>
+    computed(() =>
+      user.value?.role_details.name === IApp.AppRoles.ADMIN
+        ? IApp.AppRoles.ADMIN
+        : IApp.AppRoles.USER
+    );
   // ****** Mutations ******
   const setUser = (newUser: IAuth.User | null) => {
     user.value = newUser;
@@ -128,6 +134,7 @@ export const useAuthStore = defineStore("auth", () => {
     getRehydrateLoading,
     getAppState,
     getLoginPayload,
+    getUserType,
     // ****** Mutations ******
     setUser,
     setTokens,

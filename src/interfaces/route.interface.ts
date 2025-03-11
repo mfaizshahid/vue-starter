@@ -14,6 +14,10 @@ const User = {
 const Admin = {
   ROOT: "/admin",
   DASHBOARD: "/admin/dashboard",
+  USERS: {
+    ROOT: "/admin/users",
+    USER: "/admin/users/:id",
+  },
 } as const;
 
 export default {

@@ -1,11 +1,12 @@
 <script lang="ts" setup>
-import logo from '@/assets/logo.png'
-import { AppRoutes } from "@/interfaces";
-import { useAppStore } from "@/stores";
+import logo from "@/assets/logo.png";
+import { useAppStore, useAuthStore } from "@/stores";
 import { storeToRefs } from "pinia";
 const appStore = useAppStore();
-const { sidebarDrawer } = storeToRefs(appStore);
-
+const authStore = useAuthStore()
+  const { sidebarDrawer } = storeToRefs(appStore);
+  import getSidebarData from "@/data/sidebar";
+const sidebarData = getSidebarData(authStore.getUserType().value)
 </script>
 
 <template>
@@ -22,21 +23,26 @@ const { sidebarDrawer } = storeToRefs(appStore);
         max-height="65"
         max-width="65"
       />
-      <h3>Starter</h3>
+      <h3>Gems Track</h3>
     </div>
     <v-list nav>
-      <v-list-item
-        :to="AppRoutes.User.DASHBOARD"
-        prepend-icon="mdi-view-dashboard"
-        title="Dashboard"
-        value="dashboard"
-      />
+      <template
+        v-for="(item, index) in sidebarData"
+        :key="index"
+      >
+        <v-list-item
+          :to="item.to"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          :value="item.value"
+        />
+      </template>
     </v-list>
   </v-navigation-drawer>
 </template>
 
 <style lang="scss" scoped>
 .sidebar {
-    padding: 2rem 1rem 4rem 0.7rem;
+  padding: 2rem 1rem 4rem 0.7rem;
 }
 </style>
