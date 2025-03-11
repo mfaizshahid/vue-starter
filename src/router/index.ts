@@ -26,7 +26,6 @@ router.beforeEach(async (to) => {
   // If the user is unauthenticated and there is an access token, set the app state to user
   if (state.value === IApp.AppStates.unauthenticated && accessToken) {
     await authStore.initUser();
-    return;
   }
 
   const routeMetaState = to.meta?.allowedStates

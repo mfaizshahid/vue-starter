@@ -105,7 +105,7 @@ export const useAuthStore = defineStore("auth", () => {
       const response = await AuthApis.fetchMe();
       setUser(response.user);
       rehydrateState();
-      rehydrateNavigation();
+      // rehydrateNavigation();
       setRehydrateLoading(false);
     } catch {
       logout();
