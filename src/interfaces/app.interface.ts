@@ -6,8 +6,7 @@ export enum FormTypes {
 }
 
 export enum AppRoles {
-  ADMIN = "ADMIN",
-  USER = "USER",
+  ADMIN = "admin",
 }
 export interface ErrorMsgResponse {
   statusCode: string;
@@ -25,6 +24,8 @@ export interface CustomRouteMeta extends RouteMeta {
 
 export interface GenericResponse<T> {
   data: T;
+  statusCode: number;
+  statusMessage: string;
 }
 
 export enum AppStates {

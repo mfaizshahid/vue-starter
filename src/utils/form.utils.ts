@@ -1,45 +1,45 @@
-import {utils} from "@/utils/";
-import type {AxiosError} from "axios";
-import {IApp} from "@/interfaces";
+import { utils } from "@/utils/";
+import type { AxiosError } from "axios";
+import { IApp } from "@/interfaces";
 
 const requiredRule =
   (message: string = "Field is required") =>
-    (value: string) => {
-      return value ? true : message;
-    };
+  (value: string) => {
+    return value ? true : message;
+  };
 const emailFormatRule =
   (message: string = "Email is invalid") =>
-    (value: string) => {
-      const emailRegex = utils.getEmailValidatorRegex();
-      return emailRegex.test(value) ? true : message;
-    };
+  (value: string) => {
+    const emailRegex = utils.getEmailValidatorRegex();
+    return emailRegex.test(value) ? true : message;
+  };
 
 const minLengthRule =
   (
     message: string = "Value must be at least 8 characters",
     length: number = 8
   ) =>
-    (value: string) => {
-      return value.length >= length ? true : message;
-    };
+  (value: string) => {
+    return value.length >= length ? true : message;
+  };
 
 const maxLengthRule =
   (
     message: string = "Value must be at most 16 characters",
     length: number = 16
   ) =>
-    (value: string) => {
-      return value.length <= length ? true : message;
-    };
+  (value: string) => {
+    return value.length <= length ? true : message;
+  };
 
 const passwordFormatRule =
   (
     message: string = "'Password must contain at least one uppercase, one lowercase, one number and one special character'"
   ) =>
-    (value: string) => {
-      const passwordRegex = utils.getPasswordValidatorRegex();
-      return passwordRegex.test(value) ? true : message;
-    };
+  (value: string) => {
+    const passwordRegex = utils.getPasswordValidatorRegex();
+    return passwordRegex.test(value) ? true : message;
+  };
 
 const rangeRule =
   (
@@ -47,16 +47,15 @@ const rangeRule =
     max: number = 100,
     message: string = `Value must be between ${min} and ${max}`
   ) =>
-    (value: number) => {
-      return value >= min && value <= max ? true : message;
-    };
+  (value: number) => {
+    return value >= min && value <= max ? true : message;
+  };
 
 const extractErrorMsg = (error: Error) => {
   if ((error as AxiosError).isAxiosError) {
     const axiosError = error as AxiosError;
-    console.log(axiosError)
     const errData = axiosError?.response?.data as IApp.ErrorMsgResponse;
-    return errData.statusMessage || 'An unknown error occurred';
+    return errData.statusMessage || "An unknown error occurred";
   }
   return error.message;
 };
@@ -67,5 +66,5 @@ export default {
   maxLengthRule,
   passwordFormatRule,
   rangeRule,
-  extractErrorMsg
+  extractErrorMsg,
 };

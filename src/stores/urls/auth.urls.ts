@@ -1,7 +1,7 @@
 import { BaseUrls } from "@/stores/urls";
 
-const ME = BaseUrls.AUTH_BASE_URL + "/me";
-const REFRESH_TOKEN = BaseUrls.AUTH_BASE_URL + "/refresh";
+const ME = BaseUrls.AUTH_BASE_URL + "/";
+const REFRESH_TOKEN = BaseUrls.AUTH_BASE_URL + "/generate-token";
 const EMAIL_REGISTER = BaseUrls.AUTH_BASE_URL + "/register";
 const EMAIL_LOGIN = BaseUrls.AUTH_BASE_URL + "/login";
 const RESEND_EMAIL_VERIFICATION = BaseUrls.AUTH_BASE_URL + "/email/resend";

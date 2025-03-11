@@ -1,20 +1,29 @@
+import type { GenericResponse } from "@/interfaces/app.interface";
 import { IAuth } from "@/stores/modules/auth";
 import { AuthUrls } from "@/stores/urls";
-import axios, {type AxiosRequestConfig, type AxiosResponse} from "axios";
-const emailRegister = async (payload: IAuth.AuthFormPayload):Promise<AxiosResponse<IAuth.User>> => {
+import axios, { type AxiosResponse } from "axios";
+const emailRegister = async (
+  payload: IAuth.AuthFormPayload
+): Promise<AxiosResponse<IAuth.User>> => {
   return await axios.post<IAuth.User>(AuthUrls.EMAIL_REGISTER, payload);
 };
 
 const emailLogin = async (payload: IAuth.AuthFormPayload) => {
-  return await axios.post(AuthUrls.EMAIL_LOGIN, payload);
+  const resp = await axios.post(AuthUrls.EMAIL_LOGIN, payload);
+  return resp.data;
 };
 
-const refreshToken = async (config: AxiosRequestConfig) => {
-  return await axios.post(AuthUrls.REFRESH_TOKEN, null, config);
+const refreshToken = async (
+  payload: string
+): Promise<IAuth.RefreshTokenResp> => {
+  const url = `${AuthUrls.REFRESH_TOKEN}/${payload}`;
+  const resp = await axios.get<GenericResponse<IAuth.RefreshTokenResp>>(url);
+  return resp.data.data;
 };
 
-const fetchMe = async <T>() => {
-  return await axios.get<T>(AuthUrls.ME);
+const fetchMe = async (): Promise<IAuth.FetchMeResp> => {
+  const resp = await axios.get<GenericResponse<IAuth.FetchMeResp>>(AuthUrls.ME);
+  return resp.data.data;
 };
 
 const resendEmailVerification = async (

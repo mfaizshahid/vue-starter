@@ -7,16 +7,23 @@
 // Plugins
 import vuetify from "./vuetify";
 import router from "../router";
-import { VueQueryPlugin } from '@tanstack/vue-query'
-import Notifications from '@kyvg/vue3-notification'
-
+import { VueQueryPlugin } from "@tanstack/vue-query";
+import Notifications from "@kyvg/vue3-notification";
 
 // Types
 import type { App } from "vue";
 import { createPinia } from "pinia";
+import { requestInterceptor, responseInterceptor } from "@/utils";
 
+requestInterceptor();
+responseInterceptor();
 const pinia = createPinia();
 
 export function registerPlugins(app: App) {
-  app.use(vuetify).use(router).use(pinia).use(VueQueryPlugin).use(Notifications)
+  app
+    .use(vuetify)
+    .use(router)
+    .use(pinia)
+    .use(VueQueryPlugin)
+    .use(Notifications);
 }

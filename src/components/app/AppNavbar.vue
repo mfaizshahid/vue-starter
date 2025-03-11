@@ -7,8 +7,8 @@ const appStore = useAppStore();
 const { sidebarDrawer } = storeToRefs(appStore);
 
 const logoutUser = () => {
-  authStore.logout()
-}
+  authStore.logout();
+};
 </script>
 
 <template>
@@ -26,7 +26,9 @@ const logoutUser = () => {
       <!-- Route name -->
       <div class="base-card flex-grow-1">
         <div class="d-flex align-center ga-2">
-          <v-app-bar-nav-icon @click.stop="appStore.setSidebarDrawer(!sidebarDrawer)" />
+          <v-app-bar-nav-icon
+            @click.stop="appStore.setSidebarDrawer(!sidebarDrawer)"
+          />
           <div v-if="$route.name !== $router.currentRoute.value.name">
             <!--            <v-img :alt="$route.meta.title as string" :src="utils.constructImageUrl($route.meta.icon)" max-height="auto"-->
             <!--                   width="30"/>-->
@@ -38,8 +40,7 @@ const logoutUser = () => {
             <!--                   width="30"/>-->
             <v-icon
               :class="{
-                'mdi-spin mdi-rotate-45': $route.meta.iconClasses
-
+                'mdi-spin mdi-rotate-45': $route.meta.iconClasses,
               }"
               color="primary"
             >
@@ -50,7 +51,6 @@ const logoutUser = () => {
         </div>
       </div>
 
-
       <div class="base-card cursor-pointer">
         <div class="d-flex">
           <v-avatar
@@ -59,15 +59,12 @@ const logoutUser = () => {
             size="32"
           />
           <h3 v-if="authStore.user">
-            {{ authStore.user.firstName }}
+            {{ authStore.user.name }}
           </h3>
         </div>
 
         <v-menu activator="parent">
-          <v-list
-            density="compact"
-            nav
-          >
+          <v-list density="compact" nav>
             <v-list-item
               append-icon="mdi-logout"
               link
@@ -83,7 +80,7 @@ const logoutUser = () => {
 
 <style lang="scss" scoped>
 @use "sass:map";
-@use '@/styles/cards';
+@use "@/styles/cards";
 @use "@/styles/variables" as *;
 
 .navbar {
@@ -91,7 +88,7 @@ const logoutUser = () => {
 
   .base-card {
     @extend .base-card;
-    border: 2px solid map.get($app-light-colors, 'border');
+    border: 2px solid map.get($app-light-colors, "border");
     border-radius: 1.5rem;
   }
 }
@@ -99,4 +96,5 @@ const logoutUser = () => {
 //
 //.app-bar {
 //  border: 1.5px solid map.get($takafo-light-colors, 'border');
-//}</style>
+//}
+</style>

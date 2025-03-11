@@ -1,6 +1,6 @@
-
-export interface AuthUserResponse extends Tokens {
+export interface AuthUserResponse {
   user: User;
+  tokens: Tokens;
 }
 export interface User extends Role {
   email: string;
@@ -36,3 +36,11 @@ export interface ConfirmEmailPayload {
 export interface ResetPasswordPayload
   extends ResendEmailVerificationPayload,
     ConfirmEmailPayload {}
+
+export interface RefreshTokenResp {
+  tokens: Tokens;
+}
+
+export interface FetchMeResp {
+  user: User;
+}

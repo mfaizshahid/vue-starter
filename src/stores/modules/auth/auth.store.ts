@@ -9,7 +9,7 @@ export const useAuthStore = defineStore("auth", () => {
   // ****** State ******
   const user = ref<IAuth.User | null>(null);
   const tokens = ref<IAuth.Tokens | null>(null);
-  const rehydrateLoading = ref<boolean>(false);
+  const rehydrateLoading = ref<boolean>(true);
   const appState = ref<IApp.AppStates>(IApp.AppStates.unauthenticated);
   const loginPayload = ref<IAuth.AuthFormPayload>({
     email: "",
@@ -42,7 +42,7 @@ export const useAuthStore = defineStore("auth", () => {
   // ****** Actions ******
   // Process the login response and set the user and tokens
   const processLogin = (authUserResponse: IAuth.AuthUserResponse) => {
-    const { user, ...tokens } = authUserResponse;
+    const { user, tokens } = authUserResponse;
     setUser(user); // Set the user
     setTokens(tokens); // Set the tokens
     saveTokensToStorage(tokens); // Save the tokens to storage
@@ -51,16 +51,15 @@ export const useAuthStore = defineStore("auth", () => {
   };
   // Save the tokens to storage
   const saveTokensToStorage = (tokens: IAuth.Tokens) => {
-    localStorage.setItem("accessToken", tokens.access_token);
-    localStorage.setItem("refreshToken", tokens.refresh_token);
+    localStorage.setItem("access_token", tokens.access_token);
+    localStorage.setItem("refresh_token", tokens.refresh_token);
   };
   // Load the tokens from storage, if they exist
   const loadTokensFromStorage = () => {
-    const accessToken = localStorage.getItem("accessToken");
-    const refreshToken = localStorage.getItem("refreshToken");
-    const expiresIn = localStorage.getItem("expiresIn");
+    const accessToken = localStorage.getItem("access_token");
+    const refreshToken = localStorage.getItem("refresh_token");
 
-    if (accessToken && refreshToken && expiresIn) {
+    if (accessToken && refreshToken) {
       const tokens: IAuth.Tokens = {
         access_token: accessToken,
         refresh_token: refreshToken,
@@ -74,47 +73,34 @@ export const useAuthStore = defineStore("auth", () => {
     if (!_user) setAppState(IApp.AppStates.unauthenticated);
     else if (_user.role_details.name === IApp.AppRoles.ADMIN)
       setAppState(IApp.AppStates.admin);
-    else if (
-      _user.role_details.name === IApp.AppRoles.USER &&
-      !_user.active
-    )
-      setAppState(IApp.AppStates.emailVerificationPending);
-    else if (
-      _user.role_details.name === IApp.AppRoles.USER &&
-      _user.active
-    )
-      setAppState(IApp.AppStates.user);
-    else setAppState(IApp.AppStates.unauthenticated);
+    else setAppState(IApp.AppStates.user);
   };
   // Navigate user based on the app state
-  const rehydrateNavigation = () => {
+  const rehydrateNavigation = async () => {
     // const router = useRouter()
     const state = appState.value;
-
     if (state === IApp.AppStates.unauthenticated) {
       // Navigate to the login page
-      router.push(AppRoutes.Auth.LOGIN);
-    } else if (state === IApp.AppStates.emailVerificationPending) {
-      // Navigate to the email verification page
-      router.push(AppRoutes.Auth.EMAIL_VERIFICATION);
-    } else if (state === IApp.AppStates.emailVerificationComplete) {
-      // Navigate to the user dashboard
+      await router.push(AppRoutes.Auth.LOGIN);
     } else if (state === IApp.AppStates.user) {
       // Navigate to the user dashboard
-      router.push(AppRoutes.User.DASHBOARD);
+      await router.push(AppRoutes.User.DASHBOARD);
     } else if (state === IApp.AppStates.admin) {
       // Navigate to the admin dashboard
+      await router.push(AppRoutes.Admin.DASHBOARD);
     } else if (state === IApp.AppStates.rootError) {
-      router.push(AppRoutes.Auth.LOGIN);
+      await router.push(AppRoutes.Auth.LOGIN);
     }
   };
   // Initialize the user
   const initUser = async () => {
     try {
-      const response = await AuthApis.fetchMe<IAuth.User>();
-      setUser(response.data);
+      setRehydrateLoading(true);
+      const response = await AuthApis.fetchMe();
+      setUser(response.user);
       rehydrateState();
-      // rehydrateNavigation();
+      rehydrateNavigation();
+      setRehydrateLoading(false);
     } catch {
       logout();
     }

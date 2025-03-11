@@ -11,7 +11,13 @@ const User = {
   DASHBOARD: "/user/dashboard",
 } as const;
 
+const Admin = {
+  ROOT: "/admin",
+  DASHBOARD: "/admin/dashboard",
+} as const;
+
 export default {
   Auth,
   User,
+  Admin,
 };

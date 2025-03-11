@@ -2,10 +2,7 @@
   <AuthWrapper>
     <template #slider>
       <div class="d-flex justify-center align-center fill-height">
-        <v-img
-          src="@/assets/auth/dynamic-messaging.webp"
-          max-height="800px"
-        />
+        <v-img src="@/assets/auth/dynamic-messaging.webp" max-height="800px" />
       </div>
     </template>
     <template #content>
@@ -34,34 +31,35 @@
 </template>
 
 <script lang="ts" setup>
-import { RouterLink } from 'vue-router';
-import {AppRoutes, IApp} from '@/interfaces';
-import { useEmailRegister } from "@/hooks/auth"
+import { RouterLink } from "vue-router";
+import { AppRoutes, IApp } from "@/interfaces";
+import { useEmailRegister } from "@/hooks/auth";
 import { useNotification } from "@kyvg/vue3-notification";
-import router from '@/router'
-import { IAuth } from '@/stores/modules/auth'
-import { useAuthStore } from '@/stores'
+import router from "@/router";
+import { IAuth } from "@/stores/modules/auth";
+import { useAuthStore } from "@/stores";
 import formUtils from "@/utils/form.utils";
-import { definePage } from 'vue-router/auto'
 definePage({
+  name: "register",
   meta: {
     requiresAuth: false,
-    allowedStates: ['unauthenticated'],
-    layout: 'default'
+    allowedStates: ["unauthenticated"],
+    layout: "default",
   },
-})
+});
 
 // *** Variables ***
-const formTitle = "Start Conversing with Innovation" // Form title
-const formSubtitle = "Create your account to unlock personalized chat experiences and more." // Form subtitle
-const submitBtnText = "Create Account" // Submit button text
-const { notify } = useNotification() // Notification
-const { mutate, isPending } = useEmailRegister() // Register mutation
-const authStore = useAuthStore() // Auth store
+const formTitle = "Start Conversing with Innovation"; // Form title
+const formSubtitle =
+  "Create your account to unlock personalized chat experiences and more."; // Form subtitle
+const submitBtnText = "Create Account"; // Submit button text
+const { notify } = useNotification(); // Notification
+const { mutate, isPending } = useEmailRegister(); // Register mutation
+const authStore = useAuthStore(); // Auth store
 
 onBeforeMount(() => {
-  authStore.setLoginPayload({email: "", password: "", name: undefined})
-})
+  authStore.setLoginPayload({ email: "", password: "", name: undefined });
+});
 // *** Functions ***
 
 /**
@@ -76,17 +74,17 @@ const registerUser = async (payload: IAuth.AuthFormPayload) => {
         text: "Account registered. Please verify your email!",
         type: "success",
       });
-      await router.push(AppRoutes.Auth.LOGIN)
+      await router.push(AppRoutes.Auth.LOGIN);
     },
     // Error callback
     onError: async (error: Error) => {
-      const errorMsg = formUtils.extractErrorMsg(error)
+      const errorMsg = formUtils.extractErrorMsg(error);
       notify({
         title: "Registration Error",
         text: errorMsg,
         type: "error",
       });
-    }
-  })
-}
+    },
+  });
+};
 </script>

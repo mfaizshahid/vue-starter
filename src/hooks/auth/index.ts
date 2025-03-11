@@ -7,4 +7,10 @@ const useEmailRegister = () => {
   })
 }
 
-export { useEmailRegister }
+const useEmailLogin = () => {
+  return useMutation({
+    mutationFn: AuthApis.emailLogin
+  })
+}
+
+export { useEmailRegister, useEmailLogin }
